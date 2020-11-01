@@ -50,7 +50,7 @@ class BlogController extends AbstractController
      * @Route("/blog/new",name="blog_create")
      * @Route("/blog/{id}/edit", name="blog_edit")
      */
-    public function form(Article $article = null, Request $request, EntityManagerInterface $manager){
+    public function form(Article $article = null , Request $request, EntityManagerInterface $manager){
 
         if(!$article){
             $article = new Article();
@@ -62,11 +62,14 @@ class BlogController extends AbstractController
                         ->add('content')
                         ->add('image')
                         ->getForm();   */
+
+
+
             $form = $this->createForm(ArticleType::class,$article);             
             
             $form->handleRequest($request);
 
-            dump($article); 
+            //dump($article); 
 
             if($form->isSubmitted() && $form->isValid()){
                 if(!$article->getId()){

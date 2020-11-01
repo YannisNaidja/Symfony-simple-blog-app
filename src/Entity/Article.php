@@ -56,6 +56,11 @@ class Article
 
     public function __construct()
     {
+       /* $this->id=0;
+        $this->title="";
+        $this->image="";
+        $this->createdAt=new DateTime();
+        $this->$category=new Category();*/
         $this->comments = new ArrayCollection();
     }
 
