@@ -4,6 +4,7 @@
 
 {% block body %}
 
+{% if app.user %}
 
 <h1>
     {% if editMode %}
@@ -31,6 +32,17 @@
 
     {{ form_end(formArticle) }}
 
-   
+{% else %}
+
+<h2>Connectez-vous pour créer un article</h2>
+<a href="{{path('security_login')}}" class="btn btn-primary">Connexion</a>
+<a href="{{path('security_registration')}}" class="btn btn-primary">Inscription</a>
+
+    
+
+{% endif %}
+
+
+
 
 {% endblock %}

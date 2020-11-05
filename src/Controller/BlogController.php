@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 
@@ -47,15 +48,18 @@ class BlogController extends AbstractController
 
 
     /**
-     * @Route("/blog/new",name="blog_create")
+     * @Route("/blog/new/{id}",name="blog_create")
      * @Route("/blog/{id}/edit", name="blog_edit")
      */
-    public function form(Article $article = null , Request $request, EntityManagerInterface $manager){
+    public function form($id,Article $article = null , Request $request, EntityManagerInterface $manager){
 
         if(!$article){
             $article = new Article();
         }
-            
+        
+        $repository = $this->getDoctrine()->getRepository(User::class);
+
+        $user = $repository->find($id);
 
           /*  $form = $this->createFormBuilder($article)
                         ->add('title')
@@ -74,8 +78,10 @@ class BlogController extends AbstractController
             if($form->isSubmitted() && $form->isValid()){
                 if(!$article->getId()){
                     $article->setCreatedAt(new \DateTime());
+                    
                 }
-                
+
+                $article->setUser($user);
 
                 $manager->persist($article);
                 $manager->flush();
@@ -132,6 +138,24 @@ class BlogController extends AbstractController
         $manager->flush();
 
         return $this->redirectToRoute('blog_show', ['id' => $comment->getArticle()->getId()]);
+    }
+
+
+    /**
+     * @Route("/blog/articles/{id}",name="user_articles")
+     */
+    public function articleOfUser($id){
+
+        $repository = $this->getDoctrine()->getRepository(User::class);
+
+        $user = $repository->find($id);
+
+        $articles = $user->getArticles();
+
+        return $this->render('blog/userArticles.html.twig', [
+            'articles' => $articles
+        ]);
+
     }
 
     
