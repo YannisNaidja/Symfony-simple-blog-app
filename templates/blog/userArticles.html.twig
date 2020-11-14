@@ -1,18 +1,27 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h1>Voici la liste de vos articles:</h1>
-<section class="articles">
-    {% for article in articles %}
-<article>
-    <h2>{{ article.title }}</h2>
-    <div class="metadata">Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}  </div>
-    <div class="content">
-        <img src="{{ article.image }}" alt="">
-        {{ article.content | raw }}
-        <a href=" {{ path('blog_show', {'id' : article.id}) }}" class="btn btn-primary">Lire la suite </a>
-    </div>
-</article>
-{% endfor %}
+
+<section>
+    {% if articles|length > 0 %}
+    
+    <h4 style="margin-top: 20px;">Voici la liste de vos articles:</h4>
+        {% for article in articles %}
+        <article class="articles">
+            <h5>{{ article.title }}</h5>
+            <div class="metadata">
+                Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}  
+            </div>
+            <div class="articleContent">
+                <img src="{{ article.image }}" alt="">
+                {{ article.content | raw }}
+                <a href=" {{ path('blog_show', {'id' : article.id}) }}" class="btn btn-primary readButton">Lire la suite</a>
+            </div>
+        </article>
+    {% endfor %}
+    {% else %}
+        <h4>Vous n'avez pas encore d'articles, ecrivez-en!</h4>
+    {% endif %}
+    
 </section>
 {% endblock %}

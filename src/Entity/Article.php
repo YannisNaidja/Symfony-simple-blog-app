@@ -52,7 +52,7 @@ class Article
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article", orphanRemoval=true)
      */
-    private $comments;
+    public $comments;
 
     
     /**

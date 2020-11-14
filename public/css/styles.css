@@ -1,0 +1,21 @@
+.articleContent{
+    width: 30em;
+    
+    
+}
+
+.articleTitle{
+    font-size: medium;
+}
+
+.articles{
+    width: 58%;
+    margin-top: 20px;
+    border-bottom: mintcream 3px solid;
+    
+}
+
+.readButton{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

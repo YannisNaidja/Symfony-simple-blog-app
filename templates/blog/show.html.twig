@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 {% block body %}
 <article>
-    <h2>{{ article.title }}</h2>
+    <h4>{{ article.title }}</h4>
     <div class="metadata">Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}</div>
     <div class="content">
         <img src="{{ article.image }}" alt="">
@@ -10,7 +10,7 @@
 </article>
 
 <section id="commentaires">
-    <h1>{{article.comments | length }} Commentaires: </h1>
+    <h5>{{article.comments | length }} Commentaires: </h5>
     {% for comment in article.comments %}
     <div class="comment">
         <div class="row">
@@ -36,8 +36,8 @@
     <button type="submit" class="btn btn-success">Commenter</button>
     {{form_end(commentForm)}}
     {% else %}
-        <h2>Connectez-vous pour Commenter</h2>
-        <a href="{{path('security_login')}}" class="btn btn-primary">Connexion</a>
+        <h6>Connectez-vous pour Commenter</h6   >
+        <a href="{{path('security_login')}}" class="btn btn-primary readButton">Connexion</a>
     {% endif %}
     
 </section>
