@@ -15,7 +15,12 @@
             <div class="articleContent">
                 <img src="{{ article.image }}" alt="">
                 {{ article.content | raw }}
-                <a href=" {{ path('blog_show', {'id' : article.id}) }}" class="btn btn-primary readButton">Lire la suite</a>
+                <div>
+                    <a href=" {{ path('blog_show', {'id' : article.id}) }}" class="btn btn-primary readButton">Lire la suite</a>
+                    <a href=" {{ path('blog_edit', {'id' : article.id}) }}" class="btn btn-primary readButton">Editer l'article</a>
+                    <a href=" {{ path('blog_deleteArticle', {'id' : article.id}) }}" class="btn btn-primary readButton">Supprimer l'article</a>
+                </div>
+                
             </div>
         </article>
     {% endfor %}

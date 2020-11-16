@@ -59,7 +59,7 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/blog/new/{id}",name="blog_create")
-     * @Route("/blog/{id}/edit", name="blog_edit")
+     * 
      */
     public function form($id,Article $article = null , Request $request, EntityManagerInterface $manager,
                             ArticleService $articleService, UserRepository $repo){
@@ -87,6 +87,31 @@ class BlogController extends AbstractController
             'editMode' => $article->getId()!==null
         ]);
     }
+    /**
+     * 
+     * @Route("/blog/edit/{id}", name="blog_edit")
+     */
+
+     public function edit($id,Article $article = null,Request $request, EntityManagerInterface $manager,
+                            ArticleService $articleService, ArticleRepository $repo){
+
+        $form = $this->createForm(ArticleType::class,$article);             
+            
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $articleService->updateArticle($id,$repo,$article,$manager);
+        
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+
+        }
+
+        return $this->render('blog/update.html.twig',[
+            'formArticle' => $form->createView()   
+        ]);
+     }
+    
 
      /**
      * @Route("/blog/{id}",name="blog_show")
@@ -142,5 +167,23 @@ class BlogController extends AbstractController
 
     }
 
+    /**
+     * 
+     * @Route("blog/article/delete/{id}", name="blog_deleteArticle")
+     * 
+     */
+    public function deleteArticle($id,EntityManagerInterface $manager,ArticleService $articleService,ArticleRepository $repository
+    ,UserService $userService,UserRepository $userRepository){
+
+        $user_id = $articleService->deleteArticle($id,$repository,$manager);
+
+        $articles = $userService->getArticlesOfUser($user_id,$userRepository);
+
+        return $this->render('blog/userArticles.html.twig', [
+            'articles' => $articles
+        ]);
+
+
+    }
     
 }

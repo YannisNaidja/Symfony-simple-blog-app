@@ -7,11 +7,9 @@
 {% if app.user %}
 
 <h5 style="margin-top: 10px;";>
-    {% if editMode %}
+
     Modifier un article
-    {% else %}
-    Créer un article
-    {% endif %}
+    
 </h5>
 
     {{ form_start(formArticle) }}
@@ -23,11 +21,7 @@
 
    
     <button type="submit" class="btn btn-success">
-        {% if editMode %}
-        Enregistrer la modification
-        {% else %}
-        Ajouter l'article
-        {% endif %}
+        Enregistrer la modification   
     </button>
 
     {{ form_end(formArticle) }}

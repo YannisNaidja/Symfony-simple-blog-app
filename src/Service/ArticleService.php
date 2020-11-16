@@ -39,6 +39,29 @@ class ArticleService{
 
     }
 
+    public function deleteArticle($id,ArticleRepository $repository,EntityManagerInterface $manager){
+
+
+        //$repository = $this->getDoctrine()->getRepository(User::class);
+
+        $article = $repository->find($id);
+        $user_id = $article->getUser()->getId();
+
+        $manager->remove($article);
+        $manager->flush();
+
+        return $user_id;
+
+    }
+    public function updateArticle($id,ArticleRepository $repository,Article $article, EntityManagerInterface $manager){
+
+        $article = $repository->find($id);
+        
+        $manager->persist($article);
+        $manager->flush();
+
+    }
+
     public function getArticleOfUser($id){
 
         $repository = $this->getDoctrine()->getRepository(User::class);

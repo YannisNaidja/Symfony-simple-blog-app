@@ -10,7 +10,13 @@
 </article>
 
 <section id="commentaires">
+
+    {% if article.comments | length > 1 %}
     <h5>{{article.comments | length }} Commentaires: </h5>
+    {% else %}
+    <h5>{{article.comments | length }} Commentaire: </h5>
+    {% endif %}
+    
     {% for comment in article.comments %}
     <div class="comment">
         <div class="row">
