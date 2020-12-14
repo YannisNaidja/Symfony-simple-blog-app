@@ -5,7 +5,7 @@
 <section>
     {% if articles|length > 0 %}
     
-    <h4 style="margin-top: 20px;">Voici la liste de vos articles:</h4>
+    <h4 style="margin: 20px;margin-left:30%;">Voici la liste de vos articles:</h4>
         {% for article in articles %}
         <article class="articles">
             <h5>{{ article.title }}</h5>
@@ -25,7 +25,10 @@
         </article>
     {% endfor %}
     {% else %}
-        <h4>Vous n'avez pas encore d'articles, ecrivez-en!</h4>
+       
+        <a href="{{ path('blog_create',{'id' : userId } ) }}">
+            <h4 style="margin: 20px;margin-left:20%;">Vous n'avez pas encore d'articles, ecrivez-en!</h4>
+        </a>
     {% endif %}
     
 </section>

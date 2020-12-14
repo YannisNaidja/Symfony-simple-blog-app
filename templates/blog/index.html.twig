@@ -4,7 +4,8 @@
 
 {% block body %}
 
-<section>
+
+<section style="margin-top: 50px;margin-left:30%;">
     {% for article in articles %}
 <article class="articles">
     <h5>{{ article.title }}</h5>
@@ -20,4 +21,6 @@
 </article>
 {% endfor %}
 </section>
+
 {% endblock %}
+

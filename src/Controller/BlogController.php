@@ -51,8 +51,7 @@ class BlogController extends AbstractController
      */
     public function home(){
         return $this->render('blog/home.html.twig', [
-            'title' => 'Bienvenue dans le blog',
-            'age' => 12,
+            'title' => 'Bienvenue'   
         ]);
     }
 
@@ -162,7 +161,8 @@ class BlogController extends AbstractController
         $articles = $userService->getArticlesOfUser($id,$repository);
 
         return $this->render('blog/userArticles.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'userId' => $id
         ]);
 
     }
@@ -181,6 +181,7 @@ class BlogController extends AbstractController
 
         return $this->render('blog/userArticles.html.twig', [
             'articles' => $articles
+        
         ]);
 
 
