@@ -5,34 +5,34 @@
 {% block body %}
 
 {% if app.user %}
+<div class="centeredContainer">
+    <h5 style="margin-top: 20px;";>
 
-<h5 style="margin-top: 10px;";>
+        Modifier un article
+        
+    </h5>
 
-    Modifier un article
-    
-</h5>
+        {{ form_start(formArticle) }}
 
-    {{ form_start(formArticle) }}
-
-    {{  form_row(formArticle.title, {'attr': { 'placeholder' : "Titre de l'article"}}) }}
-    {{  form_row(formArticle.category) }}
-    {{  form_row(formArticle.content, {'attr': { 'placeholder' : "Contenu de l'article"}})  }}
-    {{  form_row(formArticle.image, {'attr': { 'placeholder' : "URL de l'image"}}) }}
-
-   
-    <button type="submit" class="btn btn-success">
-        Enregistrer la modification   
-    </button>
-
-    {{ form_end(formArticle) }}
-
-{% else %}
-
-<h5>Connectez-vous pour créer un article</h5>
-<a href="{{path('security_login')}}" class="btn btn-primary">Connexion</a>
-<a href="{{path('security_registration')}}" class="btn btn-primary">Inscription</a>
+        {{  form_row(formArticle.title, {'attr': { 'placeholder' : "Titre de l'article"}}) }}
+        {{  form_row(formArticle.category) }}
+        {{  form_row(formArticle.content, {'attr': { 'placeholder' : "Contenu de l'article"}})  }}
+        {{  form_row(formArticle.image, {'attr': { 'placeholder' : "URL de l'image"}}) }}
 
     
+        <button type="submit" class="btn btn-success">
+            Enregistrer la modification   
+        </button>
+
+        {{ form_end(formArticle) }}
+
+    {% else %}
+
+    <h5>Connectez-vous pour créer un article</h5>
+    <a href="{{path('security_login')}}" class="btn btn-primary">Connexion</a>
+    <a href="{{path('security_registration')}}" class="btn btn-primary">Inscription</a>
+
+</div>    
 
 {% endif %}
 

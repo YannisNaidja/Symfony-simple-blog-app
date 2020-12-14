@@ -4,23 +4,23 @@
 
 {% block body %}
 
-
-<section style="margin-top: 50px;margin-left:30%;">
-    {% for article in articles %}
-<article class="articles">
-    <h5>{{ article.title }}</h5>
-    <div class="metadata">Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}  </div>
-    <div class="articleContent">
-        <img src="{{ article.image }}" alt="">
-        {{ article.content | raw }}
+<div class="centeredContainer">
+    <section>
+        {% for article in articles %}
+    <article class="articles">
+        <h5>{{ article.title }}</h5>
+        <div class="metadata">Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}  </div>
         <div>
-            <a href=" {{ path('blog_show', {'id' : article.id}) }}" class="btn btn-primary readButton">Lire la suite </a>
+            <img src="{{ article.image }}" alt="">
+            {{ article.content | raw }}
+            <div>
+                <a href=" {{ path('blog_show', {'slug' : article.slug}) }}" class="btn btn-primary readButton">Lire la suite </a>
+            </div> 
         </div>
-        
-    </div>
-</article>
-{% endfor %}
-</section>
+    </article>
+    {% endfor %}
+    </section>
+</div>
 
 {% endblock %}
 

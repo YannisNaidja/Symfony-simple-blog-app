@@ -1,35 +1,37 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+<div class="centeredContainer">
+    <section>
+        {% if articles|length > 0 %}
+        
+        <h3>Voici la liste de vos articles:</h3>
 
-<section>
-    {% if articles|length > 0 %}
-    
-    <h4 style="margin: 20px;margin-left:30%;">Voici la liste de vos articles:</h4>
-        {% for article in articles %}
-        <article class="articles">
-            <h5>{{ article.title }}</h5>
-            <div class="metadata">
-                Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}  
-            </div>
-            <div class="articleContent">
-                <img src="{{ article.image }}" alt="">
-                {{ article.content | raw }}
-                <div>
-                    <a href=" {{ path('blog_show', {'id' : article.id}) }}" class="btn btn-primary readButton">Lire la suite</a>
-                    <a href=" {{ path('blog_edit', {'id' : article.id}) }}" class="btn btn-primary readButton">Editer l'article</a>
-                    <a href=" {{ path('blog_deleteArticle', {'id' : article.id}) }}" class="btn btn-primary readButton">Supprimer l'article</a>
+            {% for article in articles %}
+            <article class="articles">
+                <h5>{{ article.title }}</h5>
+                <div class="metadata">
+                    Ecrit le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}  
                 </div>
-                
-            </div>
-        </article>
-    {% endfor %}
-    {% else %}
-       
-        <a href="{{ path('blog_create',{'id' : userId } ) }}">
-            <h4 style="margin: 20px;margin-left:20%;">Vous n'avez pas encore d'articles, ecrivez-en!</h4>
-        </a>
-    {% endif %}
-    
-</section>
+                <div class="articleContent">
+                    <img src="{{ article.image }}" alt="">
+                    {{ article.content | raw }}
+                    <div>
+                        <a href=" {{ path('blog_show', {'slug' : article.slug}) }}" class="btn btn-primary readButton">Lire la suite</a>
+                        <a href=" {{ path('blog_edit', {'slug' : article.slug}) }}" class="btn btn-primary readButton">Editer l'article</a>
+                        <a href=" {{ path('blog_deleteArticle', {'slug' : article.slug}) }}" class="btn btn-primary readButton">Supprimer l'article</a>
+                    </div>
+                    
+                </div>
+            </article>
+        {% endfor %}
+        {% else %}
+        
+            <a href="{{ path('blog_create',{'id' : userId } ) }}">
+                <h4 style="margin: 20px;margin-left:20%;">Vous n'avez pas encore d'articles, ecrivez-en!</h4>
+            </a>
+        {% endif %}
+        
+    </section>
+</div>
 {% endblock %}

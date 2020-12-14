@@ -76,7 +76,7 @@ class BlogController extends AbstractController
 
                 $articleService->addArticleToUser($id,$repo,$article,$manager);
             
-                return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+                return $this->redirectToRoute('blog_show', ['slug' => $article->getSlug()]);
 
             }
            
@@ -88,10 +88,10 @@ class BlogController extends AbstractController
     }
     /**
      * 
-     * @Route("/blog/edit/{id}", name="blog_edit")
+     * @Route("/blog/edit/{slug}", name="blog_edit")
      */
 
-     public function edit($id,Article $article = null,Request $request, EntityManagerInterface $manager,
+     public function edit(Article $article = null,Request $request, EntityManagerInterface $manager,
                             ArticleService $articleService, ArticleRepository $repo){
 
         $form = $this->createForm(ArticleType::class,$article);             
@@ -100,9 +100,9 @@ class BlogController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $articleService->updateArticle($id,$repo,$article,$manager);
+            $articleService->updateArticle($repo,$article,$manager);
         
-            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+            return $this->redirectToRoute('blog_show', ['slug' => $article->getSlug()]);
 
         }
 
@@ -113,7 +113,7 @@ class BlogController extends AbstractController
     
 
      /**
-     * @Route("/blog/{id}",name="blog_show")
+     * @Route("/blog/{slug}",name="blog_show")
      */
     //param converter se charge de trouver le bon article
     public function show(CommentService $commentService, Article $article,Request $request, EntityManagerInterface $manager){
@@ -131,7 +131,7 @@ class BlogController extends AbstractController
             
             $commentService->addCommentToArticle($article,$comment,$manager);
             
-            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+            return $this->redirectToRoute('blog_show', ['slug' => $article->getSlug()]);
 
         }
         
@@ -148,7 +148,7 @@ class BlogController extends AbstractController
 
         $comment = $commentService->removeCommentFromArticle($id,$manager,$repository);
 
-        return $this->redirectToRoute('blog_show', ['id' => $comment->getArticle()->getId()]);
+        return $this->redirectToRoute('blog_show', ['slug' => $comment->getArticle()->getSlug()]);
     }
 
 
@@ -169,19 +169,20 @@ class BlogController extends AbstractController
 
     /**
      * 
-     * @Route("blog/article/delete/{id}", name="blog_deleteArticle")
+     * @Route("blog/article/delete/{slug}", name="blog_deleteArticle")
      * 
      */
-    public function deleteArticle($id,EntityManagerInterface $manager,ArticleService $articleService,ArticleRepository $repository
+    public function deleteArticle(Article $article = null,EntityManagerInterface $manager,ArticleService $articleService,ArticleRepository $repository
     ,UserService $userService,UserRepository $userRepository){
 
-        $user_id = $articleService->deleteArticle($id,$repository,$manager);
+        $user_id = $articleService->deleteArticle($article,$repository,$manager);
 
         $articles = $userService->getArticlesOfUser($user_id,$userRepository);
 
         return $this->render('blog/userArticles.html.twig', [
-            'articles' => $articles
-        
+            'articles' => $articles,
+            'userId' => $user_id
+    
         ]);
 
 

@@ -33,18 +33,22 @@ class ArticleService{
         }
 
         $article->setUser($user);
+        
 
         $manager->persist($article);
         $manager->flush();
 
+        $article->setSlug(sha1($article->getId()));
+
+        $manager->flush();
+
     }
 
-    public function deleteArticle($id,ArticleRepository $repository,EntityManagerInterface $manager){
+    public function deleteArticle(Article $article,ArticleRepository $repository,EntityManagerInterface $manager){
 
 
         //$repository = $this->getDoctrine()->getRepository(User::class);
 
-        $article = $repository->find($id);
         $user_id = $article->getUser()->getId();
 
         $manager->remove($article);
@@ -53,10 +57,8 @@ class ArticleService{
         return $user_id;
 
     }
-    public function updateArticle($id,ArticleRepository $repository,Article $article, EntityManagerInterface $manager){
+    public function updateArticle(ArticleRepository $repository,Article $article, EntityManagerInterface $manager){
 
-        $article = $repository->find($id);
-        
         $manager->persist($article);
         $manager->flush();
 

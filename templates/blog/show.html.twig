@@ -1,50 +1,52 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<article>
-    <h4>{{ article.title }}</h4>
-    <div class="metadata">Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}</div>
-    <div class="content">
-        <img src="{{ article.image }}" alt="">
-        {{ article.content | raw }}
-    </div>
-</article>
-
-<section id="commentaires">
-
-    {% if article.comments | length > 1 %}
-    <h5>{{article.comments | length }} Commentaires: </h5>
-    {% else %}
-    <h5>{{article.comments | length }} Commentaire: </h5>
-    {% endif %}
-    
-    {% for comment in article.comments %}
-    <div class="comment">
-        <div class="row">
-            <div class="col-3">
-                {{ comment.author }} (<small>{{comment.createdAt | date 
-                    ('d/m/Y à H:i') }}</small>)
-            </div>
-            <div class="col">
-                {{comment.content | raw}}
-            </div>
-            {% if app.user %}
-            <div class="col">
-                <a href="{{ path('blog_delete',{'id' : comment.id} ) }}" class="btn btn-danger">Supprimer</a>
-            </div>
-            {% endif %}
+<div class="centeredContainer">
+    <article>
+        <h4 style="margin-top: 20px;">{{ article.title }}</h4>
+        <div class="metadata">Ecris le {{ article.createdAt | date('d/m/Y') }} dans la categorie {{ article.category.title }} par {{ article.user.username }}</div>
+        <div class="content">
+            <img src="{{ article.image }}" alt="">
+            {{ article.content | raw }}
         </div>
-    </div>
-    {% endfor %}
+    </article>
 
-    {% if app.user %}
-    {{form_start(commentForm)}}
-    {{form_row(commentForm.content,{'label': 'Contenu','attr': {'placeholder': 'Votre commentaire'}})}}
-    <button type="submit" class="btn btn-success">Commenter</button>
-    {{form_end(commentForm)}}
-    {% else %}
-        <h6>Connectez-vous pour Commenter</h6   >
-        <a href="{{path('security_login')}}" class="btn btn-primary readButton">Connexion</a>
-    {% endif %}
-    
-</section>
+    <section id="commentaires">
+
+        {% if article.comments | length > 1 %}
+        <h5>{{article.comments | length }} Commentaires: </h5>
+        {% else %}
+        <h5>{{article.comments | length }} Commentaire: </h5>
+        {% endif %}
+        
+        {% for comment in article.comments %}
+        <div class="comment">
+            <div class="row">
+                <div class="col-3">
+                    {{ comment.author }} (<small>{{comment.createdAt | date 
+                        ('d/m/Y à H:i') }}</small>)
+                </div>
+                <div class="col">
+                    {{comment.content | raw}}
+                </div>
+                {% if app.user %}
+                <div class="col">
+                    <a href="{{ path('blog_delete',{'id' : comment.id} ) }}" class="btn btn-danger">Supprimer</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if app.user %}
+        {{form_start(commentForm)}}
+        {{form_row(commentForm.content,{'label': 'Contenu','attr': {'placeholder': 'Votre commentaire'}})}}
+        <button type="submit" class="btn btn-success">Commenter</button>
+        {{form_end(commentForm)}}
+        {% else %}
+            <h6>Connectez-vous pour Commenter</h6   >
+            <a href="{{path('security_login')}}" class="btn btn-primary readButton">Connexion</a>
+        {% endif %}
+        
+    </section>
+</div>
 {% endblock %}

@@ -6,13 +6,15 @@
 
 {% if app.user %}
 
-<h5 style="margin: 20px;margin-left:40%;";>
+<h3 style="margin: 20px;margin-left:40%;";>
     {% if editMode %}
     Modifier un article
     {% else %}
     Créer un article
     {% endif %}
 </h5>
+
+    <div class="centeredContainer">
 
     {{ form_start(formArticle) }}
 
@@ -31,6 +33,8 @@
     </button>
 
     {{ form_end(formArticle) }}
+
+    </div>
 
 {% else %}
 
