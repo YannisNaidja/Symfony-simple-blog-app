@@ -1,7 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-Connexion!
+
+<div class="centeredContainer">
+    <h3>
+        Connexion
+     </h3>
     <form action="{{ path('security_login') }}" method="POST">
         <div class="form-group">
             <input placeholder="Adresse Email.." required name="_username" type="text" class="form-control">
@@ -13,4 +17,5 @@ Connexion!
             <button type="submit" class="btn btn-success">Connexion</button>
         </div>
     </form>
+</div> 
 {% endblock %}

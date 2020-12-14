@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
 
             $userService->registerUser($user,$manager,$encoder);
 
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('blog');
         }
 
         return $this->render('security/registration.html.twig',[
